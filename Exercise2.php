@@ -11,12 +11,6 @@
             $logIn = true;
         }
     }
-    
-    // If logout
-    if (isset($_GET["logout"])) {
-        unset($_SESSION['username']);
-        session_destroy();
-    }
 ?>
 
 <!DOCTYPE html>
