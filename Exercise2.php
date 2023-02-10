@@ -1,13 +1,29 @@
 <?php
-    // Store Login Detail
-    setcookie("username", "michael", time() + (86400 * 30), "/"); // 86400 = 1 day
+    // my user data
+    $data = [
+        "username" => "michael",
+        "cookiesTime" => time() + (86400 * 30),
+    ];
 
+    // encode data in json and base64
+    $dataEncoding = base64_encode(json_encode($data));
+
+    // Store Login Detail
+    setcookie("userInfos", $dataEncoding, time() + (86400 * 30), "/"); // 86400 = 1 day
+
+    // form submit
     $submit = false;
+    // login state
     $logIn = false;
+
     // submit form
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $submit = true;
-        if (($_COOKIE["username"] == $_POST["username"])) {
+
+        // decode data base64 and json
+        $dataDecrypt = json_decode(base64_decode($_COOKIE["userInfos"]), true);
+
+        if (($dataDecrypt["username"] == $_POST["username"])) {
             $logIn = true;
         }
     }
